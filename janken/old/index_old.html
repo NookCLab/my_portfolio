@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ドット絵風じゃんけんゲーム</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap" rel="stylesheet"> -->
+
+    <!-- ① Google Fonts から「DotGothic16」を読み込むコード -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ② 画面全体（body）にドット絵風フォントを適用するCSS */
+        body {
+        font-family: "DotGothic16", sans-serif;
+        background-color: #111; /* 背景を黒にするとよりゲームっぽくなります */
+        color: #fff;            /* 文字を白に */
+        padding: 20px;
+        text-align: center;
+        }
+
+        /* ボタンもドット絵風に合わせる場合のサンプルCSS */
+        input[type="button"] {
+        font-family: "DotGothic16", sans-serif;
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: #333;
+        color: #fff;
+        border: 3px solid #fff; /* 白い枠線でファミコン風に */
+        cursor: pointer;
+        }
+        
+        input[type="button"]:hover {
+        background-color: #555;
+        }
+        
+        input[type="button"]:disabled {
+        background-color: #222;
+        color: #666;
+        border-color: #555;
+        cursor: not-allowed;
+        }
+            /* 📦 コマンド表示用ボックスのCSS */
+    .message-box {
+      max-width: 500px;
+      margin: 30px auto;      /* ボタンの下に適度な余白を空けて中央配置 */
+      padding: 20px;
+      background-color: #000; /* ボックスの中は真っ黒 */
+      border: 4px double #fff;/* 白い2本線の枠（ファミコン風） */
+      border-radius: 5px;     /* 角をほんの少し丸く */
+      min-height: 200px;       /* 文字がなくても潰れないように高さを確保 */
+      font-size: 20px;
+      line-height: 1.5;
+      text-align: left;       /* 左詰めでメッセージを表示 */
+    }
+    </style>
+
+</head>
+<body>
+    <!-- <form name="form1">
+        <input type="button" id="btnG" onclick="myChoice(0)" value="グー">
+        <input type="button" id="btnC" onclick="myChoice(1)" value="チョキ">
+        <input type="button" id="btnP" onclick="myChoice(2)" value="パー">
+    </form>
+    <script>
+        if(!confirm("じゃんけんしますか？")) {
+            document.getElementById("btnG").disabled = true;
+            document.getElementById("btnC").disabled = true;
+            document.getElementById("btnP").disabled = true;
+        }
+
+        function myChoice(jankenUser){
+            var strLocal = myResult(jankenUser);
+            alert(strLocal)
+        }
+    </script> -->
+
+    <h1>じゃんけんバトル</h1>
+
+    <!-- 📦 ボタンの下に配置したメッセージボックス -->
+    <div id="msgBox" class="message-box">
+        <!-- じゃんけんの 手を 選んでください。 -->
+    </div>
+
+    <form name="form1">
+        <input type="button" id="btnG" onclick="myChoice(0)" value="グー">
+        <input type="button" id="btnC" onclick="myChoice(1)" value="チョキ">
+        <input type="button" id="btnP" onclick="myChoice(2)" value="パー">
+    </form>
+
+
+
+    <!-- <script>
+        // 最初にボタンを無効化
+        document.getElementById("btnG").disabled = true;
+        document.getElementById("btnC").disabled = true;
+        document.getElementById("btnP").disabled = true;
+
+        // ダイアログで「OK」が押されたらボタンを有効化
+        if (confirm("じゃんけんしますか？")) {
+        document.getElementById("btnG").disabled = false;
+        document.getElementById("btnC").disabled = false;
+        document.getElementById("btnP").disabled = false;
+        }
+
+        function myChoice(jankenUser) {
+            var hands = ["グー", "チョキ", "パー"];
+            var userHand = hands[jankenUser];
+        
+            // 表示する文字列を作成
+            var strLocal = "プレイヤーは " + userHand + " をくりだした！\n";
+
+            // myResult(jankenUser)を呼び出して勝敗文字列を取得
+            var strLocal2 = myResult(jankenUser);
+
+            strLocal += strLocal2;
+
+            // 💡 alert(strLocal) の代わりに、ボックスの中身を書き換える
+            // \n（改行）をブラウザで表示するために、少し特殊なプロパティを使います
+
+            // 💡 文字を1文字ずつ表示するためのタイマーを管理する変数
+            var typeTimer = null;
+
+            // 前の文字送りタイマーが動いていたら、一度クリアする（連打対策）
+            if (typeTimer !== null) {
+                clearInterval(typeTimer);
+            }
+
+            // 3. メッセージボックスを一度空にする
+            var msgBox = document.getElementById("msgBox");
+            msgBox.innerText = "";
+    
+            var index = 0;
+
+            // 4. 定期的に処理を実行するタイマーをスタート（50ミリ秒ごとに1文字追加）
+            typeTimer = setInterval(function() {
+                // 全体の文字数に達するまで、1文字ずつ追加していく
+                if (index < strLocal.length) {
+                    msgBox.innerText += strLocal.charAt(index);
+                    index++;
+                } else {
+                    // すべての文字を表示し終わったらタイマーを止める
+                    clearInterval(typeTimer);
+                    typeTimer = null;
+                }
+            }, 50); // 💡 ここの「50」の数値を小さくすると早く、大きくすると遅くなります
+
+        // document.getElementById("msgBox").innerText = strLocal;
+        }
+    </script> -->
+</body>
+<script src="js/script.js"></script>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ドット絵風じゃんけんゲーム</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+
+    <!-- Google Fonts から「DotGothic16」を読み込むコード -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <h1>じゃんけんバトル</h1>
+
+    <!-- メッセージボックス *別途、jsにてメッセージ内容を記述する -->
+    <div id="msgBox" class="message-box"></div>
+
+    <form name="form1">
+        <!-- じゃんけん用のボタン -->
+        <input type="button" id="btnG" onclick="myChoice(0)" value="グー">
+        <input type="button" id="btnC" onclick="myChoice(1)" value="チョキ">
+        <input type="button" id="btnP" onclick="myChoice(2)" value="パー">
+    
+        <!-- 【追加】もう一度ボタン（初期状態は非表示） -->
+        <input type="button" id="btnReset" onclick="resetGame()" value="もう一度" style="display: none;">
+    </form>
+
+</body>
+<script src="js/script.js"></script>
+</html>

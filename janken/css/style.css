@@ -1,0 +1,54 @@
+@charset 'UTF-8';
+
+/* 画面全体（body）にドット絵風フォントを適用 */
+body {
+    font-family: "DotGothic16", sans-serif;
+    background-color: #111;     /* ゲームのように背景を黒に */
+    color: #fff;                /* 文字を白に */
+    padding: 20px;
+    text-align: center;
+}
+
+/* ボタンもドット絵風に合わせる */
+input[type="button"] {
+    font-family: "DotGothic16", sans-serif;
+    font-size: 18px;
+    width: 120px;           
+    height: 45px;
+    padding: 0;
+    margin: 10px;
+    background-color: #333;
+    color: #fff;
+    border: 3px solid #fff;     /* 白い枠線でファミコン風に */
+    cursor: pointer;
+    box-sizing: border-box;       /* 枠線を含めた正確なサイズ計算にする設定 */
+}
+input[type="button"]:hover {
+    background-color: #555;
+}
+input[type="button"]:disabled {
+    background-color: #222;
+    color: #666;
+    border-color: #555;
+    cursor: not-allowed;
+}
+
+/* コマンド表示用ボックスのCSS */
+.message-box {
+    max-width: 500px;
+    margin: 30px auto;            /* ボタンの下に適度な余白を空けて中央配置 */
+    padding: 20px;
+    background-color: #000;     /* ボックスの中は真っ黒 */
+    border: 4px double #fff;    /* ファミコン風に白い2本線の枠 */
+    border-radius: 5px;           /* 角をほんの少し丸く */
+    min-height: 200px;            /* 文字がなくても潰れないように高さを確保 */
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: left;             /* 左詰めでメッセージを表示 */
+}
+
+/* 初期画面のCSS */
+#titleScreen {
+  padding-top: 100px;
+  text-align: center;
+}
